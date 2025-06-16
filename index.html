@@ -1,0 +1,273 @@
+<!DOCTYPE html >
+<html>
+<head>
+	<title>Ask Bible AI</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="scss/style.css" type="text/css" />
+	<script lang="text/javascript">
+		function handleClose(modalName) {
+			const container = document.getElementById(modalName);
+			
+			container.classList.remove("isVisible");
+		}
+		
+		function toogleExpand(index) {
+			const element = document.querySelectorAll('.expandParaqItem')?.[index];
+			
+			element.classList.toggle('expanded');
+			console.log(element);
+		}
+		
+		function handleOpenPolicy() {
+			const container = document.getElementById('modal-policy');
+			return;
+			container.classList.add("isVisible");
+		}
+		
+		function handleSendForm(type, errorType) {
+			const container = document.getElementById(errorType);
+			const element = document.getElementById(type);
+			const message = element.value;
+			
+			const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+			
+			if (message === '') {
+				container.classList.add("input-error-empty");
+				container.classList.remove("input-error-format");
+				element.classList.add('input-error');
+				return;
+			} 
+			
+			if (!EMAIL_REGEXP.test(message)) {
+				container.classList.remove("input-error-empty");
+				container.classList.add("input-error-format");
+				element.classList.add('input-error');
+				return;
+			}
+			
+			container.classList.remove("input-error-format");
+			container.classList.remove("input-error-empty");
+			element.classList.remove('input-error');
+			
+			const data = {
+				email: message,
+			}
+			
+			const sendEmail = async () => {
+				return await fetch('https://info.mapatas.es/landing/user/', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(data)
+				});
+			}
+			
+			sendEmail().then(response => response.json()).then(res => {
+				if (!res?.errors) {
+					console.log('Send email error', res?.errors);
+				}
+				const modal = document.getElementById('modal-success');
+				modal.classList.add("isVisible");
+				element.value = "";
+			})
+		}
+	</script>
+</head>
+<body>
+	<div class="main mainPBottom">
+		<div class="header">
+			<a href="#">
+				<img style="width: 148px;" src="scss/image/logo.png" alt="" />
+			</a>
+		</div>
+		<div class="headerAfter">
+			<div class="badje">King James Version Based</div>
+			<img src="scss/image/title.png" alt="" />
+			<div class="titleMainText">
+				Ask Bible AI is a free Chrome extension that lets you chat with the Bible. Get clear, verse-based answers from the King James Bible — fast and distraction-free.
+			</div>
+		</div>
+		<div class="searchLine">
+			<a class="ctaButton" target="_blank" href="https://chromewebstore.google.com/detail/ask-bible-ai-%E2%80%94-your-ai-ch/hanjalneoampblhkodhmjfbhfnohdbmh?utm_source=item-share-cb">
+				<img src="scss/image/cta.png" alt="" />
+			</a>
+		</div>
+	</div>
+	<div class="main skyBg">
+		<div class="containerMiddle">
+			<h3>How Ask Bible AI Works</h2>
+			<p>Watch how to ask a Bible question and get a clear KJV answer — right in Chrome.</p>
+			<div class="containerVideo">
+				<iframe width="100%" height="560" src="https://www.youtube.com/embed/I64ytqSmBdA?si=TFTA117huLxCqV-H" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			</div>
+		</div>
+	</div>
+	<div class="main">
+		<div class="containerMiddle">
+			<h3>Why People Use Ask Bible AI</h2>
+			<div class="afterHeading">
+				<div class="containerItemBig bgContainer01">
+					<div class="containerInside">
+						<h2>Answers powered by Bible-focused AI</h2>
+						<p>
+							Trained only on Scripture — Ask Bible AI gives you study-ready answers, not generic chatbot replies.
+						</p>
+					</div>
+				</div>
+				<div class="containerItemSmall bgContainer02">
+					<h3>
+						Get instant Bible answers
+					</h3>
+					<p>
+						No more scrolling through forums or apps — Ask Bible AI gives you clear answers from the King James Bible in seconds.
+					</p>
+				</div>
+				<div class="containerItemSmall bgContainer03">
+					<h3>
+						100% Private. Just You and the Word.
+					</h3>
+					<p>
+						No ads. No tracking. Just Scripture.
+					</p>
+				</div>
+				<div class="containerItemBig bgContainer04">
+					<div class="containerInside">
+						<h2>
+							Based on the King James Version only
+						</h2>
+						<p>
+							All verses and explanations come strictly from the King James Version — no paraphrasing, no blending.
+					</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="containerClinics">
+		<div class="containerClinicsWrapper">
+			<h3>Who Can Use Ask Bible AI?</h3>
+			<div class="clinicListContainer">
+				<div class="clinicListItem">
+					<img src="scss/image/card-body_01.png" alt="" />
+					<div class="clinicInfo">
+						<h5>New to Bible study?</h5>
+						<p class="clinicInfoDescription">
+							Ask simple questions and get clear answers — no confusion, no pressure. 
+						</p>
+					</div>
+				</div>
+				<div class="clinicListItem">
+					<img src="scss/image/card-body_02.png" alt="" />
+					<div class="clinicInfo">
+						<h5>Need a quick Bible verse?</h5>
+						<p class="clinicInfoDescription">
+							Type how you feel — find Bible verses for anxiety, peace, or strength in seconds.
+						</p>
+					</div>
+				</div>
+				<div class="clinicListItem">
+					<img src="scss/image/card-body_03.png" alt="" />
+					<div class="clinicInfo">
+						<h5>Teaching or mentoring others?</h5>
+						<p class="clinicInfoDescription">
+							Use Ask Bible AI to prep devotionals or explain Scripture faster — always KJV.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="main">
+		<div class="containerMiddle">
+			<h3>Frequently Asked Questions</h3>
+			<div class="faqBlock">
+				<div class="acordionItem">
+					<p class="expandParaqItem" onclick="toogleExpand(0)" >What Bible version does it use?</p>
+					<p>All answers come from the King James Bible (KJV) only — no paraphrasing or mixed translations.</p>
+				</div>
+				<div class="acordionItem">
+					<p class="expandParaqItem" onclick="toogleExpand(1)">Do I need to create an account?</p>
+					<p>Right now, no login is required — you can use it instantly. Account features may be added later.</p>
+				</div>
+				<div class="acordionItem">
+					<p class="expandParaqItem" onclick="toogleExpand(2)">Is it really free?</p>
+					<p>Yes, Ask Bible AI is currently free to use. Premium features may come later, but the basics will stay accessible.</p>
+				</div>
+				<div class="acordionItem">
+					<p class="expandParaqItem" onclick="toogleExpand(3)">Can I ask any type of question?</p>
+					<p>Yes — anything related to Scripture, like "What does the Bible say about fear?" or "Verses on peace".</p>
+				</div>
+				<div class="acordionItem">
+					<p class="expandParaqItem" onclick="toogleExpand(4)">Is this based on real AI or just a search tool?</p>
+					<p>It’s an AI trained specifically on Scripture — not just a search box or database.</p>
+				</div>
+			</div>
+		</div>
+		<div class="subscribeForm">
+			<div class="subscribeFormLeft">
+				<div class="subscribeFormItemTitle">
+					<h3>
+						Ask your first Bible question — it’s free, fast, and private
+					</h3>
+					<p>
+						Add Ask Bible AI to Chrome and get clear answers from the King James Bible — right when you need them.
+					</p>
+					
+				</div>
+				<div class="subscribeFormItem">
+					<a class="ctaButton" target="_blank" href="https://chromewebstore.google.com/detail/ask-bible-ai-%E2%80%94-your-ai-ch/hanjalneoampblhkodhmjfbhfnohdbmh?utm_source=item-share-cb">
+						<img src="scss/image/cta.png" alt="" />
+					</a>
+				</div>
+			</div>
+			<div class="subscribeFormRight">
+				<img src="scss/image/frame_img.png" alt="" />
+			</div>
+		</div>
+		<div class="footer">
+			<div class="footerLeft">
+				<div>
+					<img style="width: 148px;" src="scss/image/logo.png" alt="" />
+					<div class="footerCopyRight">
+						<p class="black noMargin">©2025 Ask Bible AI</p>
+					</div>
+				</div>
+			</div>
+			<div class="footerLinks">
+					<a class="footerLinksItem" target="_blank" href="https://www.notion.so/arthursubbota/Privacy-Policy-for-Ask-Bible-AI-205f9e18ce1880f7b3afc95ea2824e2e">
+						Privacy Policy
+					</a>
+				</div>
+			<div>
+				<p class="noMargin">askbible.ai@gmail.com</p>
+			</div>
+		</div>
+	</div>
+	<div id="modal-policy" class="modalBackground">
+		<div class="modal">
+			<div class="modal-title">
+				Política de privacidad
+			</div>
+			<div class="modal-pre-title">
+				Su Acuerdo
+			</div>
+			<div class="modal-parag">
+				Valoramos su privacidad y estamos comprometidos a proteger sus datos personales. La recopilación y el procesamiento de su dirección de correo electrónico se realizan para notificarle sobre el lanzamiento de nuestro servicio y para enviarle otras novedades y actualizaciones relacionadas con el proyecto. Sus datos no se compartirán con terceros. 
+				<br /><br />
+				Si tiene alguna pregunta, contáctenos por correo electrónico: hola@mapatas.es
+			</div>
+			<div class="modal-pre-title">
+				Términos de uso
+			</div>
+			<div class="modal-parag">
+				Al utilizar nuestro sitio y suscribirse a la lista de espera, usted acepta que su dirección de correo electrónico se utilizará para notificarle sobre el lanzamiento del servicio y para enviarle noticias relacionadas.
+			</div>
+			<div class="modal-button">
+				<button onclick="handleClose('modal-policy')" class="btn primary" >Cerrar</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
